@@ -58,9 +58,6 @@ class KkboxModule(LyricsModule):
         super().__init__(url, config)
         self._client: KkboxClient | None = None
 
-    # ------------------------------------------------------------------ #
-    # Client management
-    # ------------------------------------------------------------------ #
     def _ensure_client(self) -> None:
         """Initialize and authenticate the KKBOX client."""
         kc1_key = self.config.get('kc1_key', '')
@@ -97,10 +94,7 @@ class KkboxModule(LyricsModule):
         if self._client is None:
             self._ensure_client()
         return self._client  # type: ignore[return-value]
-
-    # ------------------------------------------------------------------ #
-    # Default / validate config
-    # ------------------------------------------------------------------ #
+    
     @staticmethod
     def default_config() -> dict:
         """Return default KKBOX configuration."""
@@ -122,9 +116,6 @@ class KkboxModule(LyricsModule):
                     "See README for setup instructions."
                 )
 
-    # ------------------------------------------------------------------ #
-    # Single-track fetch
-    # ------------------------------------------------------------------ #
     def fetch(self) -> LyricsResponse:
         """Fetch lyrics for the configured URL.
 
@@ -234,9 +225,6 @@ class KkboxModule(LyricsModule):
             },
         )
 
-    # ------------------------------------------------------------------ #
-    # Album batch fetch
-    # ------------------------------------------------------------------ #
     def fetch_album(self) -> list[LyricsResponse]:
         """Fetch lyrics for all tracks in a KKBOX album.
 
