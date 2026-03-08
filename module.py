@@ -261,7 +261,7 @@ class KkboxModule(LyricsModule):
 
         results: list[LyricsResponse] = []
         for i, song in enumerate(songs, 1):
-            song_id = song.get('song_id') or song.get('id', '')
+            song_id = song.get('encrypted_song_id') or song.get('song_id', '')
             song['song_idx'] = song.get('song_idx', i)
             try:
                 response = self._fetch_track_lyrics(str(song_id), song)
@@ -270,10 +270,7 @@ class KkboxModule(LyricsModule):
                 logger.warning(f'No lyrics for track {i}: {song.get("song_name", song_id)}')
 
         return results
-
-    # ------------------------------------------------------------------ #
-    # Playlist batch fetch
-    # ------------------------------------------------------------------ #
+    
     def fetch_playlist(self) -> list[LyricsResponse]:
         """Fetch lyrics for all tracks in a KKBOX playlist.
 
@@ -302,7 +299,7 @@ class KkboxModule(LyricsModule):
 
         results: list[LyricsResponse] = []
         for song in songs:
-            song_id = song.get('song_id') or song.get('id', '')
+            song_id = song.get('encrypted_song_id')
             try:
                 response = self._fetch_track_lyrics(str(song_id), song)
                 results.append(response)
